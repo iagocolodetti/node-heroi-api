@@ -1,0 +1,507 @@
+openapi: '3.0.2'
+info:
+  title: node-heroi-api
+  description: API para listar, adicionar e excluir heróis.
+  version: '1.0'
+  contact:
+    name: Iago Colodetti
+    url: https://github.com/iagocolodetti
+
+servers:
+  - url: http://localhost:8080/herois/wr
+
+tags:
+  - name: Usuário
+    description: REST API para Usuário
+  - name: Heroí
+    description: REST API para Herói
+  - name: Universo
+    description: REST API para Universo
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: apiKey
+      name: Authorization
+      in: header
+      
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int
+          example: 1
+          description: ID do usuário
+        nome:
+          type: string
+          example: Nome
+          description: Nome de usuário
+        senha:
+          type: string
+          example: MinhaSenha123
+          description: Senha de acesso
+        dataCadastro:
+          type: string
+          format: date
+          example: '2020-01-01T12:00:00.000Z'
+          description: Data do cadastro
+
+    Heroi:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int
+          example: 1
+          description: ID do herói
+        nome:
+          type: string
+          example: Nome
+          description: Nome do herói
+        dataCadastro:
+          type: string
+          format: date
+          example: '2020-01-01T12:00:00.000Z'
+          description: Data do cadastro
+        ativo:
+          type: boolean
+          example: true
+          description: Herói ativo
+        poderes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Poder'
+        universo:
+          $ref: '#/components/schemas/Universo'
+
+    Poder:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int
+          example: 1
+          description: ID do poder
+        descricao:
+          type: string
+          example: Poder
+          description: Nome do poder que o herói possui
+
+    Universo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int
+          example: 1
+          description: ID do universo
+        nome:
+          type: string
+          example: Nome
+          description: Nome do universo
+          
+    Erro:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date
+          example: '2020-01-01T12:00:00.000Z'
+          description: Data do erro
+        status:
+          type: integer
+          format: int
+          example: 500
+          description: Código do erro
+        erro:
+          type: string
+          example: Internal Server Erro
+          description: Nome do erro
+        message:
+          type: string
+          example: Não foi possível ...
+          description: Mensagem de erro
+        path:
+          type: string
+          example: /exemplo
+          description: Caminho usado
+        method:
+          type: string
+          example: POST
+          description: Método usado
+          
+  examples:
+    Usuario:
+      value:
+        nome: Nome
+        senha: MinhaSenha123
+      summary: Usuário
+    
+    RetornoUsuario:
+      value:
+        id: 1
+        nome: Nome
+        dataCadastro: '2020-01-01T12:00:00.000Z'
+      summary: Retorno de Usuário
+      
+    NovoHeroi:
+      value:
+        nome: Nome
+        poderes:
+          - descricao: Poder
+        universo:
+          id: 1
+      summary: Novo Herói
+      
+    RetornoHeroi:
+      value:
+        id: 1
+        nome: Nome
+        dataCadastro: '2020-01-01T12:00:00.000Z'
+        ativo: true
+        poderes:
+          - id: 1
+            descricao: Poder
+        universo:
+            id: 1
+            nome: Nome
+      summary: Retorno de Herói
+      
+    RetornoHerois:
+      value:
+        - id: 1
+          nome: Nome
+          dataCadastro: '2020-01-01T12:00:00.000Z'
+          ativo: true
+          poderes:
+            - id: 1
+              descricao: Poder
+          universo:
+              id: 1
+              nome: Nome
+      summary: Retorno de Heróis
+      
+    RetornoUniversos:
+      value:
+        - id: 1
+          nome: Nome
+      summary: Retorno de Universos
+  
+    Erro400:
+      value:
+        timestamp: '2020-01-01T12:00:00.000Z'
+        status: 400
+        erro: Bad Request
+        message: ... não informado
+        path: /exemplo
+        method: GET
+      summary: Erro 400
+  
+    Erro401:
+      value:
+        timestamp: '2020-01-01T12:00:00.000Z'
+        status: 401
+        erro: Unauthorized
+        message: ... não autorizado
+        path: /exemplo
+        method: GET
+      summary: Erro 401
+  
+    Erro404:
+      value:
+        timestamp: '2020-01-01T12:00:00.000Z'
+        status: 404
+        erro: Not Found
+        message: ... não encontrado
+        path: /exemplo
+        method: GET
+      summary: Erro 404
+  
+    Erro409:
+      value:
+        timestamp: '2020-01-01T12:00:00.000Z'
+        status: 409
+        erro: Conflict
+        message: ... já existe
+        path: /exemplo
+        method: GET
+      summary: Erro 409
+      
+    Erro500:
+      value:
+        timestamp: '2020-01-01T12:00:00.000Z'
+        status: 500
+        erro: Internal Server Erro
+        message: Não foi possível ...
+        path: /exemplo
+        method: GET
+      summary: Erro 500
+        
+paths:
+  # ------------- Usuários -------------
+  /usuarios:
+    post:
+      tags:
+        - Usuário
+      summary: Cria um usuário
+      description: Cria um usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+            examples:
+              Usuario:
+                $ref: '#/components/examples/Usuario'
+      responses:
+        '200':
+          description: Cria o usuário
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+              examples:
+                Usuario:
+                  $ref: '#/components/examples/RetornoUsuario'
+        '409':
+          description: Usuário já existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro409'
+        '500':
+          description: Internal Server Erro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro500'
+
+  /usuarios/login:
+    post:
+      tags:
+        - Usuário
+      summary: Retorna um token de autorização no cabeçalho
+      description: Retorna um token de autorização no cabeçalho
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+            examples:
+              Usuario:
+                $ref: '#/components/examples/Usuario'
+      responses:
+        '200':
+          description: Retorna o token de autorização no cabeçalho
+        '404':
+          description: Usuário não encontrado ou senha incorreta
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro404'
+        '500':
+          description: Internal Server Erro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro500'
+
+# ------------- Heróis -------------
+  /herois:
+    post:
+      tags:
+        - Heroí
+      summary: Adiciona um herói
+      description: Adiciona um herói
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        description: Exemplo de Herói
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Heroi'
+            examples:
+              Heroi:
+                $ref: '#/components/examples/NovoHeroi'
+      responses:
+        '201':
+          description: Adiciona o herói
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Heroi'
+              examples:
+                Heroi:
+                  $ref: '#/components/examples/RetornoHeroi'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro401'
+        '500':
+          description: Internal Server Erro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro500'
+
+    get:
+      tags:
+        - Heroí
+      summary: Retorna uma lista de heróis
+      description: Retorna uma lista de heróis
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Retorna a lista de heróis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Heroi'
+              examples:
+                Herois:
+                  $ref: '#/components/examples/RetornoHerois'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro401'
+        '500':
+          description: Internal Server Erro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro500'
+
+  /herois/{id}:
+    delete:
+      tags:
+        - Heroí
+      summary: Exclui um herói
+      description: Exclui um herói
+      parameters:
+        - in: path
+          name: id
+          description: id do Herói
+          required: true
+          schema:
+            type: integer
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Exclui o herói
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro401'
+        '404':
+          description: Herói não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro404'
+        '500':
+          description: Internal Server Erro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro500'
+
+# ------------- Universos -------------
+  /universos:
+    get:
+      tags:
+        - Universo
+      summary: Retorna uma lista de universos
+      description: Retorna uma lista de universos
+      responses:
+        '200':
+          description: Retorna a lista de universos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Universo'
+              examples:
+                Universo:
+                  $ref: '#/components/examples/RetornoUniversos'
+        '500':
+          description: Internal Server Erro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+              examples:
+                Erro:
+                  $ref: '#/components/examples/Erro500'
