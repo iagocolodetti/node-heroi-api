@@ -5,8 +5,8 @@
   "main": "server.js",
   "author": "Iago Colodetti",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev nodemon src/server.js",
-    "prod": "cross-env NODE_ENV=prod nodemon src/server.js"
+    "dev": "cross-env NODE_ENV=env.test nodemon src/server.js",
+    "prod": "cross-env NODE_ENV=env nodemon src/server.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",

@@ -129,7 +129,7 @@ module.exports = {
                     response.json(JsonError(request, response, 'Herói não encontrado'));
                 }
             } catch (error) {
-                esponse.status(400);
+                response.status(500);
                 response.json(JsonError(request, response, 'Não foi possível excluir o herói'));
             }
         } catch (error) {

@@ -6,7 +6,6 @@ const calculateString = require('../utils/calculateString');
 
 module.exports = {
     async create(request, response) {
-        console.log(request.body);
         try {
             const { nome, senha } = request.body;
             const hash = bcrypt.hashSync(senha, 10);
@@ -34,7 +33,6 @@ module.exports = {
     },
 
     async login(request, response) {
-        console.log(request.body);
         try {
             const { nome, senha } = request.body;
             const result = await Usuario.findOne({ where: { nome }, raw: true });

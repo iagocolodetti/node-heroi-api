@@ -2,7 +2,7 @@ openapi: '3.0.2'
 info:
   title: node-heroi-api
   description: API para listar, adicionar e excluir heróis.
-  version: '1.0'
+  version: '1.0.1'
   contact:
     name: Iago Colodetti
     url: https://github.com/iagocolodetti

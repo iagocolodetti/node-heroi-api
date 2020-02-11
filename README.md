@@ -3,9 +3,9 @@
 Projeto dividido em duas partes, WebService (node-heroi-api) e Cliente ([heroi-cliente](https://github.com/iagocolodetti/heroi-cliente/tree/v2.0 "https://github.com/iagocolodetti/heroi-cliente/tree/v2.0")).
 
 * Downloads: https://github.com/iagocolodetti/node-heroi-api/releases
-   * [Arquivo de Script SQL Server](https://github.com/iagocolodetti/node-heroi-api/releases/download/v1.0/heroidb_mssql.sql "heroidb_mssql.sql")
-   * [Arquivo de Script MySQL](https://github.com/iagocolodetti/node-heroi-api/releases/download/v1.0/heroidb_mysql.sql "heroidb_mysql.sql")
-   * [Código-Fonte](https://github.com/iagocolodetti/node-heroi-api/archive/v1.0.zip "v1.0.zip")
+   * [Arquivo de Script SQL Server](https://github.com/iagocolodetti/node-heroi-api/releases/download/v1.0.1/heroidb_mssql.sql "heroidb_mssql.sql")
+   * [Arquivo de Script MySQL](https://github.com/iagocolodetti/node-heroi-api/releases/download/v1.0.1/heroidb_mysql.sql "heroidb_mysql.sql")
+   * [Código-Fonte](https://github.com/iagocolodetti/node-heroi-api/archive/v1.0.1.zip "v1.0.1.zip")
    * [heroi-cliente](https://github.com/iagocolodetti/heroi-cliente/releases/tag/v2.0 "https://github.com/iagocolodetti/heroi-cliente/releases/tag/v2.0")
 
 
@@ -21,4 +21,4 @@ Backend API desenvolvida utilizando: JavaScript, Sequelize, JWT, documentação 
    * Instalar a dependência mysql2: yarn add mysql2 || npm install mysql2
 
 
--- *Como este é um projeto demonstrativo, os arquivos .env.\* foram mantidos.*
+-- *Como este é um projeto demonstrativo, os arquivos .env e .env.test foram mantidos.*

@@ -9,9 +9,8 @@ const db = require('./database');
 const routes = require('./routes');
 const corsConfig = require('./configs/cors');
 
-const env = process.env.NODE_ENV || 'dev';
-config({ path: join(__dirname, '../config/', `.env.${env}`) });
-ok(env === 'dev' || env === 'prod', 'env inválido.');
+config({ path: join(__dirname, '../config/', `.${process.env.NODE_ENV}`) });
+ok(process.env.NODE_ENV === 'env' || process.env.NODE_ENV === 'env.test', 'env inválido.');
 
 db.connect();
 
@@ -22,7 +21,7 @@ app.use(cors(corsConfig()));
 app.use(express.json());
 
 const swaggerDocument = YAML.load(join(__dirname, './configs/swagger.yaml'));
-app.use(`${process.env.BASE_PATH}/swagger`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(`${process.env.BASE_PATH}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(process.env.BASE_PATH, routes);
 
