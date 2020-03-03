@@ -4,6 +4,7 @@
   "description": "Exemplo de Rest API para cadastro/listagem Heróis com validação JWT",
   "main": "server.js",
   "author": "Iago Colodetti",
+  "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=env.test nodemon src/server.js",
     "prod": "cross-env NODE_ENV=env nodemon src/server.js"
