@@ -10,15 +10,18 @@
     "prod": "cross-env NODE_ENV=env nodemon src/server.js"
   },
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.4",
-    "sequelize": "^5.21.3",
-    "swagger-ui-express": "^4.1.3",
-    "tedious": "^8.0.1",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "sequelize": "^6.31.1",
+    "swagger-ui-express": "^4.6.3",
+    "tedious": "^16.1.0",
     "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
